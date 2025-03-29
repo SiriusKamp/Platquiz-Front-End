@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("erro") && urlParams.get("erro") === "email-existente") {
     alert("Usuário já cadastrado!");
+  } else if (
+    urlParams.has("erro") &&
+    urlParams.get("erro") === "ra-existente"
+  ) {
+    alert("RA já cadastrado!");
   }
 
   form.addEventListener("submit", async (e) => {

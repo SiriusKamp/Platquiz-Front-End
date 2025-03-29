@@ -43,7 +43,10 @@ public class usuarioController {
         if (usuarioExistente.isPresent()) {
             return "redirect:/registro?erro=email-existente";
         }
-
+        Optional<Usuario> raexistente = usuarioRepository.findByregistroAcademico(usuario.getRegistroAcademico());
+        if (raexistente.isPresent()) {
+            return "redirect:/registro?erro=ra-existente";
+        }
         // Cria o usuário e salva no banco
         Usuario novoUsuario = new Usuario(usuario.getNome(), usuario.getEmail(), usuario.getContato(), usuario.getRegistroAcademico(), usuario.getSenha(), true);
         System.out.println("Novo usuário: " + novoUsuario.getNome() + ", " + novoUsuario.getEmail() + ", " + novoUsuario.getContato() + ", " + novoUsuario.getRegistroAcademico() + ", " + novoUsuario.getSenha() + ", " + novoUsuario.isAtivo());
