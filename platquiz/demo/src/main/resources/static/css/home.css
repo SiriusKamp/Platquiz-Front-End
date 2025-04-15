@@ -69,12 +69,15 @@ main {
   transform: scale(1.05);
 }
 
-.add-card a {
+.add-card p {
   text-decoration: none;
   color: #007bff;
   font-size: 50px;
 }
+.add { 
+  text-decoration: none;
 
+}
 .questionario-card {
   cursor: pointer;
 }
@@ -87,6 +90,13 @@ main {
   background-color: red;
   height: 20px; /* Fino */
   width: 100%;
+  
+}
+.rodape p {
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  padding: 3px;
 }
 .search-bar input {
   padding: 8px 12px;

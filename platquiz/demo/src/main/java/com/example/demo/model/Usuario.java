@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,9 +14,12 @@ public class Usuario {
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Long id;
 
+ 
     private String nome;
+    @Column(unique = true, nullable = false)
     private String email;
-    private String contato;
+    private String telefone;
+    @Column(unique = true, nullable = false)
     private String registroAcademico;
     private String senha;
     private boolean ativo;
@@ -26,7 +30,7 @@ public class Usuario {
     public Usuario(String nome, String email, String contato, String registroAcademico, String senha, boolean ativo) {
         this.nome = nome;
         this.email = email;
-        this.contato = contato;
+        this.telefone = contato;
         this.registroAcademico = registroAcademico;
         this.senha = senha;
         this.ativo = ativo;
@@ -44,11 +48,11 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getContato() {
-        return contato;
+    public String gettelefone() {
+        return telefone;
     }
-    public void setContato(String contato) {
-        this.contato = contato;
+    public void settelefone(String contato) {
+        this.telefone = contato;
     }
     public String getRegistroAcademico() {
         return registroAcademico;

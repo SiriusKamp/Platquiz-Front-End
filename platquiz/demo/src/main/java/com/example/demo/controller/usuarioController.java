@@ -30,11 +30,7 @@ public class usuarioController {
         return "registro.html";
     }
 
-    @GetMapping("/")
-    public String home() {
-        System.out.println("home page accessed");
-        return "home.html";
-    }
+ 
 
     @PostMapping("/registro")
     public String registrarUsuario(@RequestBody Usuario usuario) {
@@ -48,8 +44,8 @@ public class usuarioController {
             return "redirect:/registro?erro=ra-existente";
         }
         // Cria o usuário e salva no banco
-        Usuario novoUsuario = new Usuario(usuario.getNome(), usuario.getEmail(), usuario.getContato(), usuario.getRegistroAcademico(), usuario.getSenha(), true);
-        System.out.println("Novo usuário: " + novoUsuario.getNome() + ", " + novoUsuario.getEmail() + ", " + novoUsuario.getContato() + ", " + novoUsuario.getRegistroAcademico() + ", " + novoUsuario.getSenha() + ", " + novoUsuario.isAtivo());
+        Usuario novoUsuario = new Usuario(usuario.getNome(), usuario.getEmail(), usuario.gettelefone(), usuario.getRegistroAcademico(), usuario.getSenha(), true);
+        System.out.println("Novo usuário: " + novoUsuario.getNome() + ", " + novoUsuario.getEmail() + ", " + novoUsuario.gettelefone() + ", " + novoUsuario.getRegistroAcademico() + ", " + novoUsuario.getSenha() + ", " + novoUsuario.isAtivo());
         usuarioRepository.save(novoUsuario);
 
         // Redireciona para a página de login

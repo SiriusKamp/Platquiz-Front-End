@@ -1,0 +1,37 @@
+/* Navbar */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #6ba3f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100px;
+  }
+    /* Rodapé */
+    .rodape {
+        background-color: red;
+        height: 25px;
+        width: 100%;
+        }
+      .rodape p {
+        text-align: center;
+        color: white;
+        font-size: 12px;
+        padding: 3px;
+      }
+
+      html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}

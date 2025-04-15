@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const formData = {
       nome: form.nome.value,
       email: form.email.value,
-      contato: form.contato.value,
-      senha: form.senha.value,
+      telefone: form.contato.value,
       registroAcademico: form.ra.value,
+      senha: form.senha.value,
     };
     console.log(JSON.stringify(formData));
 

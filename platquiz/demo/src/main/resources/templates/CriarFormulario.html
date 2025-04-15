@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar Formulário</title>
+    <link rel="stylesheet" href="../css/Navbar.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .campo-form {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar/Header -->
+    <header>
+      <div class="logo">
+        <img
+          src="../imagens/unisales logo vertical.png"
+          height="100px"
+          width="170px"
+          alt="Logo Unisales"
+        />
+      </div>
+    </header>
+    <main>
+      <!-- Conteúdo Central -->
+      <div class="container mt-5">
+        <div
+          id="botão-cor"
+          style="
+            border: 1px solid;
+            border-color: rgba(0, 0, 0, 0.21);
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+          "
+        >
+          <label for="cor-fundo">🎨 Trocar Cor do Card</label>
+          <input type="color" name="cor-fundo" id="cor-fundo" value="#f2f2f2" />
+        </div>
+        <div
+          class="card mx-auto"
+          style="max-width: 600px; margin-top: -75px; border-radius: 10px"
+          id="card-body"
+        >
+          <div class="card-body">
+            <h5 class="card-title text-center">Criar Formulário</h5>
+            <div id="campos-container"></div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-primary" id="adicionar-campo">
+                Adicionar Campo
+              </button>
+              <button class="btn btn-success" id="salvar-formulario">
+                Salvar Formulário
+              </button>
+              <input type="hidden" id="quiz-id" th:value="${quizId}" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Rodapé -->
+    <div class="rodape">
+      <p>Desenvolvido por: Sirius Kamphorst UNISALES</p>
+    </div>
+
+    <script src="../js/CriarFormulario.js"></script>
+  </body>
+</html>

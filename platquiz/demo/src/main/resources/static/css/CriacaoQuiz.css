@@ -1,0 +1,88 @@
+/* Navbar */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #6ba3f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100px;
+  }
+  
+  /* Rodapé */
+  .rodape {
+    background-color: red;
+    height: 20px;
+    width: 100%;
+  }
+  .rodape p {
+    text-align: center;
+    color: white;
+    font-size: 12px;
+    padding: 3px;
+  }
+  
+  /* Formulário */
+  body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+  
+  main {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+  }
+  
+  .card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 600px;
+  }
+  
+  .card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 6px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    background-color: #6ba3f8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  .color-picker {
+    margin: 20px;
+    text-align: center;
+  }
+  .materia-select { 
+    margin: 5px;
+  }

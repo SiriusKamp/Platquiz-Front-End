@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar Quiz</title>
+    <link rel="stylesheet" href="../css/CriacaoQuiz.css" />
+  </head>
+  <body>
+    <!-- Navbar/Header -->
+    <header>
+      <div class="logo">
+        <img
+          src="../imagens/unisales logo vertical.png"
+          height="100px"
+          width="170px"
+          alt="Logo Unisales"
+        />
+      </div>
+    </header>
+
+    <!-- Botão para escolher cor do fundo -->
+    <div class="color-picker">
+      <label for="cor-fundo">Escolher cor de fundo:</label>
+      <input type="color" id="cor-fundo" value="#f2f2f2" />
+    </div>
+
+    <!-- Card de criação -->
+    <main>
+      <div class="card">
+        <h2>Criar Novo Quiz</h2>
+        <form id="quiz-form">
+          <!-- Nome do Quiz -->
+          <div class="form-group">
+            <label for="nome">Nome do Quiz:</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+
+          <!-- Número de questões -->
+          <div class="form-group">
+            <label for="numeroQuestoes">Número de Questões:</label>
+            <input
+              type="number"
+              id="numeroQuestoes"
+              name="numeroQuestoes"
+              min="1"
+              required
+            />
+          </div>
+
+          <!-- Checkbox de resposta escrita -->
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="respostaEscrita" />
+              Incluir campo de resposta escrita?
+            </label>
+          </div>
+
+          <!-- Container dinâmico para múltiplos selects -->
+          <div class="form-group" id="materias-container">
+            <label>Escolha as matérias:</label>
+            <select class="materia-select">
+              <option value="">Selecione</option>
+              <option value="Filosofia">Filosofia</option>
+              <option value="Biologia">Biologia</option>
+              <option value="História">História</option>
+              <option value="Química">Química</option>
+              <option value="Matemática">Matemática</option>
+              <option value="Geografia">Geografia</option>
+              <option value="Artes">Artes</option>
+              <option value="Fisica">Fisica</option>
+              <option value="Enfermagem">Enfermagem</option>
+              <option value="Medcina">Medcina</option>
+              <option value="Tecnologias">Tecnologias</option>
+              <option value="Administração">Administração</option>
+              <option value="BioMedicina">BioMedicina</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Educação Fisica">Educação Fisica</option>
+              <option value="Psicologia">Psicologia</option>
+              <option value="Sociologia">Sociologia</option>
+              <option value="Engenharia">Engenharia civil</option>
+              <option value="Engenharia De Produção">
+                Engenharia De Produção
+              </option>
+              <option value="Arquitetura">Arquitetura</option>
+              <option value="Fisioterapia">Fisioterapia</option>
+              <option value="Nutrição">Nutrição</option>
+              <option value="Outros">Outros</option>
+            </select>
+          </div>
+
+          <!-- Botão -->
+          <button type="submit">Criar Quiz</button>
+        </form>
+      </div>
+    </main>
+
+    <!-- Rodapé -->
+    <div class="rodape">
+      <p>Desenvolvido por: Sirius Kamphorst UNISALES</p>
+    </div>
+
+    <!-- JS interativo -->
+    <script src="../js/CriacaoQuiz.js"></script>
+  </body>
+</html>
