@@ -1,28 +1,37 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class Campos {
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
        
-           @OneToOne
+           @ManyToOne
        @JoinColumn(name = "form_id", nullable = false)
        private Formularios formulario;
        private String label;
+       
+       @Column(length = 9999)
        private String campo;
 
        public Campos(Formularios formulario, String label, String campo) {
         this.formulario = formulario;
         this.label = label;
         this.campo = campo;
+    }
+    
+    public Campos() {
     }
        public Long getId() {
            return id;

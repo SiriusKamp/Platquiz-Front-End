@@ -75,7 +75,7 @@ public String home() {
     
 
     @GetMapping("criar-questionario2/{quizid}")
-public String carregarFormulario(@PathVariable Integer quizid, Model model) { 
+    public String carregarFormulario(@PathVariable Integer quizid, Model model) { 
     Optional<Quiz> quiz = quizRepository.findById(Long.valueOf(quizid));
     
     if (quiz.isEmpty()) {

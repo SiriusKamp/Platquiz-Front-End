@@ -25,7 +25,9 @@ public class Formularios {
         this.cor_card = cor_card;
 
     }
+   public Formularios(){
 
+    }
     public Quiz getQuiz() {
         return quiz;
     }
@@ -37,6 +39,9 @@ public class Formularios {
     }
     public void setCor_card(String cor_card) {
         this.cor_card = cor_card;
+    }
+    public Long getId(){
+        return id;
     }
 
     

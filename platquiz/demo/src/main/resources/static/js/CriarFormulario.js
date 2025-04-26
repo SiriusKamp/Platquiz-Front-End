@@ -180,9 +180,9 @@ document
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            formulario_id: formulario_id,
+            formularioId: formulario_id,
             label: campo.label,
-            inputHtml: campo.inputHtml,
+            campocodigo: campo.inputHtml,
           }),
         });
       }
