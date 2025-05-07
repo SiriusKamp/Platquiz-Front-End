@@ -154,6 +154,11 @@ document
     const cor = colorPicker.value;
     const quiz_id = parseInt(document.getElementById("quiz-id").value);
 
+    if (dados.length > 0) {
+      hasCampos = true;
+    } else {
+      hasCampos = false;
+    }
     console.log(quiz_id);
     try {
       const resFormulario = await fetch("/api/formularios", {
@@ -162,12 +167,16 @@ document
         body: JSON.stringify({
           quiz_id: quiz_id,
           cor: cor,
+          hasCampos: hasCampos,
         }),
       });
 
       const formularioCriado = await resFormulario.json();
       console.log(formularioCriado);
-
+      if ((formularioCriado.cor = "NoForm")) {
+        window.location.href = "/TipoAv/" + quiz_id;
+        return;
+      }
       if (!formularioCriado.id) {
         alert("Erro ao criar o formulário");
         return;

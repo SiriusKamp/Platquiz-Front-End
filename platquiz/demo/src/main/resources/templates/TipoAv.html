@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Escolha do Método de Correção</title>
+    <link rel="stylesheet" href="../css/Navbar.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .info-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        padding: 0;
+        font-size: 1rem;
+        line-height: 1;
+      }
+      .desempenho-item {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body th:style="'background-color:' + ${BackGroundColor}">
+    <header>
+      <div class="logo">
+        <img
+          src="../imagens/unisales logo vertical.png"
+          height="100px"
+          width="170px"
+          alt="Logo Unisales"
+        />
+      </div>
+    </header>
+    <div
+      class="card shadow-sm mt-3"
+      style="width: 80%; margin-left: 125px; height: 100%"
+    >
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between">
+          <h1 class="h4">
+            Escolha seu método de correção (somente numeros inteiros sem texto)
+          </h1>
+          <button
+            type="button"
+            class="btn btn-outline-info info-btn"
+            data-bs-toggle="popover"
+            data-bs-html="true"
+            title="Tipos de Correção"
+            data-bs-content="
+            • Mínimo de Acertos: O aluno deve atingir um número específico de questões corretas.<br>
+            • Porcentagem Mínima: Exige um percentual mínimo de acerto.<br>
+            • Desempenho por Acerto: Permite definir intervalos de acertos com feedback por intervalo.<br>
+            • Desempenho por Porcentagem: Igual ao anterior porém os intervalos são por porcentagem."
+          >
+            i
+          </button>
+        </div>
+
+        <div class="mt-4">
+          <label for="tipo-correção" class="form-label"
+            >Tipo de Correção:</label
+          >
+          <select id="tipo-correção" class="form-select">
+            <option value="" selected>Selecione...</option>
+            <option value="1">Mínimo de Acerto</option>
+            <option value="2">Porcentagem Mínima</option>
+            <option value="3">Desempenho por Acerto</option>
+            <option value="4">Desempenho por Porcentagem</option>
+          </select>
+          <input type="hidden" id="quiz-id" th:value="${quizid}" />
+        </div>
+
+        <!-- Tipos 1 e 2 -->
+        <div id="tipo1-2-container" class="mt-4" style="display: none">
+          <h3 id="titulo-tipo1-2"></h3>
+          <input
+            type="number"
+            class="form-control mt-2"
+            placeholder="Ex: 7, 10, 70"
+          />
+        </div>
+
+        <!-- Tipos 3 e 4 -->
+        <!-- dentro da div id="tipo3-4-container" -->
+        <div id="tipo3-4-container" class="mt-4" style="display: none">
+          <h3 id="titulo-tipo3-4"></h3>
+          <div id="desempenho-itens" class="mt-2"></div>
+          <div class="d-flex gap-2 mt-2">
+            <button id="adicionar-faixa" class="btn btn-sm btn-success">
+              + Adicionar faixa
+            </button>
+            <button id="remover-faixa" class="btn btn-sm btn-danger">
+              – Remover faixa
+            </button>
+          </div>
+        </div>
+
+        <form id="form-correção" class="mt-4">
+          <div
+            id="erro-mensagem"
+            class="alert alert-danger d-none"
+            role="alert"
+          ></div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
+    </div>
+    <!-- Rodapé -->
+    <div class="rodape">
+      <p>Desenvolvido por: Sirius Kamphorst UNISALES</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Ativa popover Bootstrap
+      const popoverTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="popover"]'
+      );
+      popoverTriggerList.forEach((el) => new bootstrap.Popover(el));
+
+      const select = document.getElementById("tipo-correção");
+      const tipo1e2 = document.getElementById("tipo1-2-container");
+      const tipo3e4 = document.getElementById("tipo3-4-container");
+      const tituloTipo1e2 = document.getElementById("titulo-tipo1-2");
+      const tituloTipo3e4 = document.getElementById("titulo-tipo3-4");
+      const desempenhoContainer = document.getElementById("desempenho-itens");
+      const btnAdicionarFaixa = document.getElementById("adicionar-faixa");
+      const btnRemoverFaixa = document.getElementById("remover-faixa");
+
+      const quiz_id = parseInt(document.getElementById("quiz-id").value);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        select.value = ""; // Resetar para "Selecione..."
+        tipo1e2.style.display = "none";
+        tipo3e4.style.display = "none";
+        desempenhoContainer.innerHTML = "";
+      });
+
+      select.addEventListener("change", () => {
+        const tipo = select.value;
+        tipo1e2.style.display = "none";
+        tipo3e4.style.display = "none";
+        desempenhoContainer.innerHTML = "";
+
+        if (tipo === "1") {
+          tituloTipo1e2.textContent =
+            "Valor mínimo para aprovação (em acertos)";
+          tipo1e2.style.display = "block";
+        } else if (tipo === "2") {
+          tituloTipo1e2.textContent = "Porcentagem mínima para aprovação (%)";
+          tipo1e2.style.display = "block";
+        } else if (tipo === "3" || tipo === "4") {
+          tituloTipo3e4.textContent =
+            tipo === "3"
+              ? "Faixas por número de acertos de x até y acertos desempenho tal"
+              : "Faixas por porcentagem de acertos de x % até y% desempenho tal";
+          tipo3e4.style.display = "block";
+          adicionarFaixa();
+        }
+      });
+
+      function adicionarFaixa() {
+        const div = document.createElement("div");
+        div.className = "desempenho-item";
+
+        div.innerHTML = `
+        <input type="number" class="form-control" placeholder="De">
+        <input type="number" class="form-control" placeholder="Até">
+        <input type="text" class="form-control" placeholder="Mensagem de desempenho">
+      `;
+
+        desempenhoContainer.appendChild(div);
+      }
+
+      function removerFaixa() {
+        const faixas = desempenhoContainer.querySelectorAll(".desempenho-item");
+        if (faixas.length > 0) {
+          desempenhoContainer.removeChild(faixas[faixas.length - 1]);
+        }
+      }
+
+      btnAdicionarFaixa.addEventListener("click", adicionarFaixa);
+      btnRemoverFaixa.addEventListener("click", removerFaixa);
+
+      // ... (o código anterior permanece igual até o final do botão de remover)
+
+      const form = document.getElementById("form-correção");
+      const erroMensagem = document.getElementById("erro-mensagem");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Previne envio padrão
+
+        const tipo = select.value;
+        erroMensagem.classList.add("d-none");
+        erroMensagem.textContent = "";
+
+        if (tipo === "3" || tipo === "4" || tipo === "") {
+          const faixas =
+            desempenhoContainer.querySelectorAll(".desempenho-item");
+          if (faixas.length === 0) {
+            erroMensagem.textContent =
+              "Adicione ao menos uma faixa de desempenho.";
+            erroMensagem.classList.remove("d-none");
+            return;
+          }
+
+          let camposVazios = false;
+
+          faixas.forEach((faixa) => {
+            const inputs = faixa.querySelectorAll("input");
+            inputs.forEach((input) => {
+              if (input.value.trim() === "") {
+                camposVazios = true;
+              }
+            });
+          });
+
+          if (camposVazios) {
+            erroMensagem.textContent =
+              "Preencha todos os campos das faixas de desempenho.";
+            erroMensagem.classList.remove("d-none");
+            return;
+          }
+        }
+
+        // Para tipos 1 e 2
+        if (tipo === "1" || tipo === "2") {
+          const input = tipo1e2.querySelector("input");
+          if (!input || input.value.trim() === "") {
+            erroMensagem.textContent =
+              "Preencha o valor mínimo para aprovação.";
+            erroMensagem.classList.remove("d-none");
+            return;
+          }
+        }
+
+        // ... (todo o código anterior permanece)
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault(); // Previne envio padrão
+
+          const tipo = select.value;
+          erroMensagem.classList.add("d-none");
+          erroMensagem.textContent = "";
+
+          let payload = {
+            tipo: tipo,
+            quizId: quiz_id,
+          };
+
+          if (tipo === "3" || tipo === "4" || tipo === "") {
+            const faixas =
+              desempenhoContainer.querySelectorAll(".desempenho-item");
+            if (faixas.length === 0) {
+              erroMensagem.textContent =
+                "Adicione ao menos uma faixa de desempenho.";
+              erroMensagem.classList.remove("d-none");
+              return;
+            }
+
+            let camposVazios = false;
+            let faixasArray = [];
+
+            faixas.forEach((faixa) => {
+              const inputs = faixa.querySelectorAll("input");
+              const de = inputs[0].value.trim();
+              const ate = inputs[1].value.trim();
+              const mensagem = inputs[2].value.trim();
+
+              if (!de || !ate || !mensagem) {
+                camposVazios = true;
+              }
+
+              faixasArray.push({ de: Number(de), ate: Number(ate), mensagem });
+            });
+
+            if (camposVazios) {
+              erroMensagem.textContent =
+                "Preencha todos os campos das faixas de desempenho.";
+              erroMensagem.classList.remove("d-none");
+              return;
+            }
+
+            payload.faixas = faixasArray;
+          }
+
+          if (tipo === "1" || tipo === "2") {
+            const input = tipo1e2.querySelector("input");
+            const valor = input.value.trim();
+
+            if (!valor) {
+              erroMensagem.textContent =
+                "Preencha o valor mínimo para aprovação.";
+              erroMensagem.classList.remove("d-none");
+              return;
+            }
+
+            payload.valor = Number(valor);
+          }
+
+          // Exemplo de envio via fetch para uma rota (ajuste a URL abaixo)
+          fetch("/avaliacoes", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          })
+            .then((res) => {
+              if (!res.ok) throw new Error("Erro no envio");
+              return res.text(); // <-- trata como texto
+            })
+            .then((mensagem) => {
+              alert("Método de correção salvo com sucesso!");
+              window.location.href = "/"; // Redireciona para a página de avaliações
+              console.log(mensagem); // Vai exibir "Avaliação salva com sucesso." ou erro do servidor
+            })
+            .catch((err) => {
+              erroMensagem.textContent = "Erro ao enviar os dados.";
+              erroMensagem.classList.remove("d-none");
+              console.error(err);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

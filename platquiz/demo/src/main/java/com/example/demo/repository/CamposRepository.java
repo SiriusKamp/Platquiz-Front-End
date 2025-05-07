@@ -6,7 +6,8 @@ import com.example.demo.model.Campos;
 import com.example.demo.model.Formularios;
 
 public interface CamposRepository extends JpaRepository<Campos, Long> {
-    <Optional> Campo findByFormulario(Formularios formulario);
+
+    <Optional> Campos findByFormulario(Formularios formulario);
     // Aqui você pode adicionar métodos personalizados, se necessário
     // Exemplo: List<Campo> findByTitulo(String titulo);
 
