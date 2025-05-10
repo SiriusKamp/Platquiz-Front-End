@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,6 +23,7 @@ import com.example.demo.DTOs.QuizDTO;
 import com.example.demo.model.Campos;
 import com.example.demo.model.Faixas;
 import com.example.demo.model.Formularios;
+import com.example.demo.model.Questoes;
 import com.example.demo.model.Quiz;
 import com.example.demo.model.Usuario;
 import com.example.demo.model.av_tipo1;
@@ -33,6 +33,7 @@ import com.example.demo.model.av_tipo4;
 import com.example.demo.repository.CamposRepository;
 import com.example.demo.repository.FaixasRepository;
 import com.example.demo.repository.FormulariosRepository;
+import com.example.demo.repository.QuestoesRepository;
 import com.example.demo.repository.QuizRepository;
 import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.repository.av_tipo1Repository;
@@ -61,6 +62,8 @@ public class QuestionarioController {
     private av_tipo4Repository av_tipo4Repository;
     @Autowired
     private FaixasRepository faixasRepository;
+    @Autowired
+    private QuestoesRepository questoesRepository;
 
     @GetMapping("/")
     public String home() {
@@ -230,24 +233,34 @@ public class QuestionarioController {
         }
     }
 
-    @GetMapping("/criarquestoes/{quizid}/{pagina}")
-    public String CriarQuestoes(@PathVariable Long quizid, @PathVariable Long pagina, Model model) {
+    @GetMapping("/criarquestoes/{quizid}")
+    public String CriarQuestoes(@PathVariable Long quizid, Model model) {
         Optional<Quiz> quiz = quizRepository.findById(Long.valueOf(quizid));
         if (quiz.isEmpty()) {
             return "redirect:/criar-questionario"; // ou uma página de erro personalizada
         }
-
-        Optional<Formularios> formOptional = formulariosRepository.findByquiz(quiz.get());
-        if (formOptional.isEmpty()) {
-            return "redirect:/criar-questionario2/" + quiz.get().getId(); // ou uma página de erro personalizada
+        int tipo = 0;
+        if (av_tipo1Repository.findByquiz(quiz.get()).isPresent()) {
+            tipo = 1;
+        } else if (av_tipo2Repository.findByquiz(quiz.get()).isPresent()) {
+            tipo = 2;
+        } else if (av_tipo3Repository.findByquiz(quiz.get()).isPresent()) {
+            tipo = 3;
+        } else if (av_tipo4Repository.findByquiz(quiz.get()).isPresent()) {
+            tipo = 4;
         }
 
-        Formularios formulario = formOptional.get();
+        if (tipo != 0) {
 
-        model.addAttribute("quizid", quiz.get().getId());
-        model.addAttribute("BackGroundColor", quiz.get().getCor_fundo());
-
-        return "CriarQuestoes"; // sem .html se estiver em templates (Thymeleaf)
+            List<Questoes> questoes = questoesRepository.findByQuiz(quiz.get());
+            if (questoes.isEmpty()) {
+                return "redirect:/criarquestoes/" + quiz.get().getId() + "/1/" + tipo; // ou uma página de erro personalizad
+            } else {
+                return "redirect:/criarquestoes/" + quiz.get().getId() + "/" + (questoes.size() + 1) + "/" + tipo; // ou uma página de erro personalizada
+            }
+        } else {
+            return "redirect:/TipoAv/" + quiz.get().getId(); // ou uma página de erro personalizada
+        }
     }
 
 }

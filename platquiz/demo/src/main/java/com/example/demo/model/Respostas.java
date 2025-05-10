@@ -20,14 +20,14 @@ public class Respostas {
 
     private String texto;
     private String img;
-    private String tipo;
-
+    private int valor;
+    
     // Construtor ajustado para receber um objeto 'Questoes' em vez de 'Long'
-    public Respostas(Questoes questao, String texto, String img, String tipo) {
+    public Respostas(Questoes questao, String texto, String img, int valor) {
         this.questao = questao;
         this.texto = texto;
         this.img = img;
-        this.tipo = tipo;
+        this.valor = valor;
     }
 
     // Getters e setters corrigidos
@@ -55,11 +55,11 @@ public class Respostas {
         this.img = img;
     }
 
-    public String getTipo() {
-        return tipo;
+    public int getValor() {
+        return valor;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void getValor(int valor) {
+        this.valor = valor;
     }
 }

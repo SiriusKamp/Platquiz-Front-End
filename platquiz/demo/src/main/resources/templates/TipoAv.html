@@ -315,7 +315,7 @@
             })
             .then((mensagem) => {
               alert("Método de correção salvo com sucesso!");
-              window.location.href = "/"; // Redireciona para a página de avaliações
+              window.location.href = "/criarquestoes/" + quiz_id; // Redireciona para a página de avaliações
               console.log(mensagem); // Vai exibir "Avaliação salva com sucesso." ou erro do servidor
             })
             .catch((err) => {
