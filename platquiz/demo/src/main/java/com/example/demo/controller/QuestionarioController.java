@@ -111,7 +111,7 @@ public class QuestionarioController {
 
         //rota para edição de questões futuras
         if (formOptional.isPresent()) {
-            model.addAttribute("formulario", formOptional.get());
+            return "redirect:/TipoAv/" + quiz.get().getId();
         }
 
         model.addAttribute("quizId", quiz.get().getId());
@@ -130,10 +130,11 @@ public class QuestionarioController {
         if (quiz.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz não encontrado");
         }
-
+        System.out.println(formdata.hasCampos);
         Formularios form = new Formularios(quiz.get(), formdata.cor);
         formulariosRepository.save(form); // Aqui já temos o ID
         Optional<Formularios> formSalvo = formulariosRepository.findByquiz(quiz.get());
+        System.out.println(formSalvo.get().getId()+" - "+formSalvo.get().getCor_card());
         return formSalvo.get(); // Retorna o formulário criado com ID
     }
 

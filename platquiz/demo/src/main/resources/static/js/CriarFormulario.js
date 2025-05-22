@@ -153,13 +153,13 @@ document
 
     const cor = colorPicker.value;
     const quiz_id = parseInt(document.getElementById("quiz-id").value);
-
+    let hasCampos = false;
     if (dados.length > 0) {
       hasCampos = true;
     } else {
       hasCampos = false;
     }
-    console.log(quiz_id);
+    
     try {
       const resFormulario = await fetch("/api/formularios", {
         method: "POST",
@@ -170,10 +170,12 @@ document
           hasCampos: hasCampos,
         }),
       });
+     
 
       const formularioCriado = await resFormulario.json();
-      console.log(formularioCriado);
-      if ((formularioCriado.cor = "NoForm")) {
+      console.log(formularioCriado
+      );
+      if ((formularioCriado.cor_card == "NoForm")) {
         window.location.href = "/TipoAv/" + quiz_id;
         return;
       }
@@ -182,8 +184,8 @@ document
         return;
       }
 
-      const formulario_id = formularioCriado.id;
 
+      const formulario_id = formularioCriado.id;
       for (let campo of dados) {
         await fetch("/api/campos", {
           method: "POST",
@@ -195,10 +197,9 @@ document
           }),
         });
       }
-
-      alert("Formulário salvo com sucesso!");
     } catch (error) {
       console.error("Erro ao salvar formulário:", error);
       alert("Erro ao salvar o formulário. Veja o console para mais detalhes.");
     }
+    window.location.href = "/TipoAv/" + quiz_id;
   });
