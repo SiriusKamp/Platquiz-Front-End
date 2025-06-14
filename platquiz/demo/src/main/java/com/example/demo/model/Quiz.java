@@ -18,20 +18,18 @@ public class Quiz {
     private int n_perguntas;
     private boolean r_escrita;
     private String materias;
-    private int tipo_avaliacao;
     private String cor_feedback;
 
     public Quiz() {}
 
     public Quiz(Usuario professor, String nome, String cor_fundo, int n_perguntas, boolean r_escrita, 
-                String materias, int tipo_avaliacao, String cor_feedback) {
+                String materias, String cor_feedback) {
         this.professor = professor;
         this.nome = nome;
         this.cor_fundo = cor_fundo;
         this.n_perguntas = n_perguntas;
         this.r_escrita = r_escrita;
         this.materias = materias;
-        this.tipo_avaliacao = tipo_avaliacao;
         this.cor_feedback = cor_feedback;
     }
 
@@ -87,13 +85,6 @@ public class Quiz {
         this.materias = materias;
     }
 
-    public int getTipo_avaliacao() {
-        return tipo_avaliacao;
-    }
-
-    public void setTipo_avaliacao(int tipo_avaliacao) {
-        this.tipo_avaliacao = tipo_avaliacao;
-    }
 
     public String getCor_feedback() {
         return cor_feedback;

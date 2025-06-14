@@ -79,7 +79,7 @@ public class QuestionarioController {
     @PostMapping("/criar-questionario")
     public String CriarQuiz(@RequestBody QuizDTO dados) {
 
-        Usuario professor = usuarioRepository.findById(1L).orElse(null);
+        Usuario professor = usuarioRepository.findById(dados.professorid).orElse(null);
         if (professor == null) {
             return "redirect:/criar-questionario?erro=Professor-Nao-encontrado";
         }
@@ -98,6 +98,34 @@ public class QuestionarioController {
 
         return "redirect:/criar-questionario2/" + ultimoQuiz.getId();
     }
+
+    @GetMapping("/criar-questionario/{id}")
+public String editarQuiz(@PathVariable Long id, Model model) {
+    Quiz quiz = quizRepository.findById(id).orElse(null);
+    if (quiz == null) {
+        return "redirect:/criar-questionario?erro=Quiz-nao-encontrado";
+    }
+    model.addAttribute("quiz", quiz);
+    return "CriacaoQuiz.html";
+}
+    @PostMapping("/editar-questionario/{id}")
+public String editarQuiz(@PathVariable Long id, @RequestBody QuizDTO dados) {
+    System.out.println(dados.nome+" "+dados.materias);
+    Quiz quiz = quizRepository.findById(id).orElse(null);
+    if (quiz == null) {
+        return "redirect:/criar-questionario?erro=Quiz-nao-encontrado";
+    }
+
+    quiz.setNome(dados.nome);
+    quiz.setN_perguntas(dados.n_perguntas);
+    quiz.setR_escrita(dados.r_escrita);
+    quiz.setCor_fundo(dados.cor_fundo);
+    quiz.setCor_feedback(dados.cor_fundo);
+    quiz.setMaterias(String.join(",", dados.materias));
+    quizRepository.save(quiz);
+
+    return "redirect:/criar-questionario2/" + id;
+}
 
     @GetMapping("criar-questionario2/{quizid}")
     public String carregarFormulario(@PathVariable Integer quizid, Model model) {
@@ -263,5 +291,20 @@ public class QuestionarioController {
             return "redirect:/TipoAv/" + quiz.get().getId(); // ou uma página de erro personalizada
         }
     }
+
+    @GetMapping(path = "/getquestionarios/{id}", produces = "application/json")
+    @ResponseBody
+    public List<Quiz> getQuizesPorProfessor(@PathVariable String id) {
+        Optional<Usuario> user = usuarioRepository.findById(Long.parseLong(id));
+        if (user.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
+        }
+        List<Quiz> quizes = quizRepository.findByprofessor(user.get());
+        if (quizes.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Quizes não encontrados");
+        }
+        return quizes;
+    }
+
 
 }

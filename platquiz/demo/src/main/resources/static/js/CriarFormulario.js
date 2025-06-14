@@ -1,3 +1,11 @@
+
+const verify = () => {
+const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+  if (!usuario) {
+    window.location.href = "login";
+  }
+};
+
 let campoIndex = 0;
 
 const colorPicker = document.getElementById("cor-fundo");
@@ -201,5 +209,10 @@ document
       console.error("Erro ao salvar formulário:", error);
       alert("Erro ao salvar o formulário. Veja o console para mais detalhes.");
     }
-    window.location.href = "/TipoAv/" + quiz_id;
+    window.location.href = "/TipoAv/" + quiz_id; 
+
   });
+
+window.onload = async () => {
+  verify();
+};

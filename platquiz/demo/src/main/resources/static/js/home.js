@@ -1,9 +1,43 @@
-// Simulação de dados vindos do backend (array de questionários do usuário)
-const questionarios = [
-  { id: 1, titulo: "Pesquisa de Satisfação" },
-  { id: 2, titulo: "Formulário de Inscrição" },
-  { id: 3, titulo: "Avaliação de Curso" },
-];
+const logout = () => {
+  sessionStorage.removeItem("usuario");
+  verify();
+};
+const questionarios = [];
+
+const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+
+const verify = () => {
+  if (!usuario) {
+    window.location.href = "login";
+  }
+};
+
+// Função para carregar os quizes do usuário
+const carregarQuizes = async () => {
+  if (!usuario) return;
+
+  try {
+   const response = await fetch(`/getquestionarios/${usuario.id}`);
+    if (!response.ok) {
+      throw new Error("Erro ao buscar questionários");
+    }
+
+    const quizes = await response.json();
+
+    quizes.forEach((quiz) => {
+      questionarios.push({
+        id: quiz.id,
+        nome: quiz.nome,
+        materias: quiz.materias,
+      });
+    });
+
+    carregarQuestionarios(); // Só carrega os cards depois de ter os dados
+
+  } catch (error) {
+    console.error("Erro ao buscar questionários:", error);
+  }
+};
 
 // Função para carregar questionários na tela
 function carregarQuestionarios() {
@@ -17,9 +51,9 @@ function carregarQuestionarios() {
   questionarios.forEach((q) => {
     const card = document.createElement("div");
     card.classList.add("card", "questionario-card");
-    card.innerText = q.titulo;
+    card.innerText = q.nome; // corrigido de q.nome para q.titulo
     card.onclick = () =>
-      (window.location.href = `questionario.html?id=${q.id}`);
+      (window.location.href = `/criar-questionario/${q.id}`);
     container.appendChild(card);
   });
 }
@@ -30,10 +64,13 @@ document.getElementById("search").addEventListener("input", function () {
   const cards = document.querySelectorAll(".questionario-card");
 
   cards.forEach((card) => {
-    const titulo = card.innerText.toLowerCase();
-    card.style.display = titulo.includes(filtro) ? "flex" : "none";
+    const nome = card.innerText.toLowerCase();
+    card.style.display = nome.includes(filtro) ? "flex" : "none";
   });
 });
 
 // Executa ao carregar a página
-window.onload = carregarQuestionarios;
+window.onload = async () => {
+  verify();
+  await carregarQuizes();
+};

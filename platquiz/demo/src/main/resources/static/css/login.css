@@ -52,7 +52,7 @@
     color: #555;
   }
   
-  input[type="email"],
+  input[type="text"],
   input[type="password"] {
     width: 100%;
     padding: 10px;
@@ -121,4 +121,8 @@
     font-size: 28px;
     font-weight: bold;
   }
-  
+  .mensagem-erro {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}

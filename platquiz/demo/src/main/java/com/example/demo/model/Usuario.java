@@ -35,6 +35,9 @@ public class Usuario {
         this.senha = senha;
         this.ativo = ativo;
     }
+    public Long getId() {
+        return id;
+    }
 
     public String getNome() {
         return nome;

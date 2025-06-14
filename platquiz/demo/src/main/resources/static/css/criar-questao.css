@@ -28,7 +28,7 @@ h2 {
 
 .pergunta-card {
   background-color: #e6f0ff;
-  padding: 20px;
+  padding: 25px;
   border-radius: 15px;
   border: 2px solid #4d90fe;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -37,8 +37,9 @@ h2 {
 
 .pergunta-card textarea,
 .pergunta-card input[type="file"] {
-  width: 100%;
+  width: 95%;
   margin-top: 8px;
+  margin-right: 5px;
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 10px;
@@ -72,10 +73,10 @@ h2 {
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   padding: 15px;
+  flex: 1 1 calc(50% - 20px);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 45%;
 }
 
 select,
